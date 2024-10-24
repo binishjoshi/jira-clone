@@ -7,8 +7,9 @@ export default function Home() {
       <Button variant="secondary">Secondary</Button>
       <Button variant="destructive">Destructive</Button>
       <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
+      <Button variant="muted">Muted</Button>
       <Button variant="outline">Outline</Button>
+      <Button variant="tertiary">Tertiary</Button>
     </div>
   );
 }
