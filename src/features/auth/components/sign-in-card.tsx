@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,24 +15,22 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import Link from "next/link";
-
-const formSchema = z.object({
-  email: z.string().trim().email(),
-  password: z.string().min(1, "Required"),
-});
+import { signInSchema } from "@/features/auth/schemas";
+import { useSignIn } from "../api/use-sign-in";
 
 export default function SignInCard() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { mutate } = useSignIn();
+
+  const form = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof signInSchema>) => {
+    mutate({ json: values });
   };
 
   return (
