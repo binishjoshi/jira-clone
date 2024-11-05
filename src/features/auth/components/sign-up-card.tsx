@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FcGoogle } from "react-icons/fc";
 
+import { useSignUp } from "../api/use-sign-up";
+import { signUpSchema } from "../schemas";
+
 import {
   Card,
   CardContent,
@@ -22,18 +25,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const formSchema = z.object({
-  name: z.string().trim().min(4, "Minimum 4 characters"),
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(8, "Minimum 8 characters")
-    .max(256, "Maximum 256 characters"),
-});
-
 export default function SignUpCard() {
+  const { mutate } = useSignUp();
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -41,8 +36,8 @@ export default function SignUpCard() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof signUpSchema>) => {
+    mutate({ json: values });
   };
 
   return (
