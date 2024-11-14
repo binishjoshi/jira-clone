@@ -21,7 +21,7 @@ import { signInSchema } from "@/features/auth/schemas";
 import { useSignIn } from "../api/use-sign-in";
 
 export default function SignInCard() {
-  const { mutate } = useSignIn();
+  const { mutate, isPending } = useSignIn();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -52,7 +52,12 @@ export default function SignInCard() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="email" placeholder="Enter email" />
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder="Enter email"
+                      disabled={isPending}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -68,6 +73,7 @@ export default function SignInCard() {
                       {...field}
                       type="password"
                       placeholder="Enter password"
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
@@ -75,7 +81,7 @@ export default function SignInCard() {
               )}
             />
 
-            <Button disabled={false} size="lg" className="w-full">
+            <Button disabled={isPending} size="lg" className="w-full">
               Sign In
             </Button>
           </form>
@@ -87,7 +93,7 @@ export default function SignInCard() {
       <CardContent className="p-7 flex flex-col gap-4">
         <Button
           variant="secondary"
-          disabled={false}
+          disabled={isPending}
           size="lg"
           className="w-full"
         >

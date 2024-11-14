@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function SignUpCard() {
-  const { mutate } = useSignUp();
+  const { mutate, isPending } = useSignUp();
   const form = useForm({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -69,7 +69,12 @@ export default function SignUpCard() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="text" placeholder="Enter name" />
+                    <Input
+                      {...field}
+                      type="text"
+                      placeholder="Enter name"
+                      disabled={isPending}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -81,7 +86,12 @@ export default function SignUpCard() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="email" placeholder="Enter email" />
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder="Enter email"
+                      disabled={isPending}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,13 +107,14 @@ export default function SignUpCard() {
                       {...field}
                       type="password"
                       placeholder="Enter password"
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button disabled={false} size="lg" className="w-full">
+            <Button disabled={isPending} size="lg" className="w-full">
               Sign Up
             </Button>
           </form>
@@ -115,7 +126,7 @@ export default function SignUpCard() {
       <CardContent className="p-7 flex flex-col gap-4">
         <Button
           variant="secondary"
-          disabled={false}
+          disabled={isPending}
           size="lg"
           className="w-full"
         >
