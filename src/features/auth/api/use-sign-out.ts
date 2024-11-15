@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferResponseType } from "hono";
+import { toast } from "sonner";
 
 import { client } from "@/lib/rpc";
 
@@ -18,8 +19,12 @@ export const useSignOut = () => {
       return await response.json();
     },
     onSuccess: () => {
+      toast.success("Signed out");
       router.refresh();
       queryClient.invalidateQueries({ queryKey: ["current"] });
+    },
+    onError: () => {
+      toast.error("Error signing out");
     },
   });
 
