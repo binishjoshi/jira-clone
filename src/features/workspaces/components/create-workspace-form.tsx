@@ -49,7 +49,9 @@ export function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
     mutate(
       { form: finalValues },
       {
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+          form.reset();
+        },
       }
     );
   };
