@@ -4,6 +4,7 @@ import { ID, Query } from "node-appwrite";
 
 import { createWorkspaceSchema } from "../schemas";
 import { sessionMiddleware } from "@/lib/session-middleware";
+import { generateInviteCode } from "@/lib/utils";
 import {
   DATABASE_ID,
   IMAGES_BUCKET_ID,
@@ -74,7 +75,12 @@ const app = new Hono()
         DATABASE_ID,
         WORKSPACES_ID,
         ID.unique(),
-        { name, userId: user.$id, imageUrl: uploadedImageUrl }
+        {
+          name,
+          userId: user.$id,
+          imageUrl: uploadedImageUrl,
+          inviteCode: generateInviteCode(8),
+        }
       );
 
       await databases.createDocument(DATABASE_ID, MEMBERS_ID, ID.unique(), {
