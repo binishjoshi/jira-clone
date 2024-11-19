@@ -10,6 +10,7 @@ import { ImageIcon } from "lucide-react";
 import { createWorkspaceSchema } from "../schemas";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 
+import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DottedSeparator from "@/components/dotted-separator";
 import {
@@ -156,6 +157,7 @@ export function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
                 variant="secondary"
                 onClick={onCancel}
                 disabled={isPending}
+                className={cn(!onCancel && "invisible")}
               >
                 Cancel
               </Button>
