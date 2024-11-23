@@ -38,6 +38,7 @@ export function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
     resolver: zodResolver(createWorkspaceSchema),
     defaultValues: {
       name: "",
+      image: "",
     },
   });
 
@@ -134,15 +135,38 @@ export function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
                           onChange={handleImageChange}
                           disabled={isPending}
                         />
-                        <Button
-                          type="button"
-                          variant="tertiary"
-                          size="xs"
-                          className="w-fit mt-2"
-                          onClick={() => inputRef.current?.click()}
-                        >
-                          Upload Image
-                        </Button>
+                        {field.value ? (
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="xs"
+                            className="w-fit mt-2"
+                            onClick={() => {
+                              field.onChange(null);
+
+                              form.setValue("image", "", {
+                                shouldValidate: true,
+                                shouldDirty: true,
+                              });
+
+                              if (inputRef.current) {
+                                inputRef.current.value = "";
+                              }
+                            }}
+                          >
+                            Remove Image
+                          </Button>
+                        ) : (
+                          <Button
+                            type="button"
+                            variant="tertiary"
+                            size="xs"
+                            className="w-fit mt-2"
+                            onClick={() => inputRef.current?.click()}
+                          >
+                            Upload Image
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </div>
