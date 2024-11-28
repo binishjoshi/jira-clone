@@ -1,4 +1,6 @@
 import { useMedia } from "react-use";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+
 import {
   Dialog,
   DialogContent,
@@ -27,8 +29,10 @@ export function ResponsiveModal({
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
+        <VisuallyHidden.Root>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </VisuallyHidden.Root>
         <DialogContent className="w-full sm:max-w-lg p-0 border-none overflow-y-auto hide-scrollbar max-[85vh]">
           {children}
         </DialogContent>
