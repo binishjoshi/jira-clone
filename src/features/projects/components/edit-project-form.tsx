@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 
 import { Project } from "../types";
 import { useUpdateProject } from "../api/use-update-project";
+import { useDeleteProject } from "../api/use-delete-project";
 import { updateProjectSchema } from "../schemas";
 
 interface EditProjectFormProps {
@@ -38,8 +39,8 @@ export function EditProjectForm({
   initialValues,
 }: EditProjectFormProps) {
   const { mutate, isPending } = useUpdateProject();
-  // const { mutate: deleteWorkspace, isPending: isDeletingWorkspace } =
-  //   useDeleteWorkspace();
+  const { mutate: deleteProject, isPending: isDeletingProject } =
+    useDeleteProject();
   const router = useRouter();
 
   const [DeleteDialog, confirmDelete] = useConfirm(
@@ -91,18 +92,18 @@ export function EditProjectForm({
       return;
     }
 
-    // deleteWorkspace(
-    //   {
-    //     param: {
-    //       workspaceId: initialValues.$id,
-    //     },
-    //   },
-    //   {
-    //     onSuccess: () => {
-    //       window.location.href = "/";
-    //     },
-    //   }
-    // );
+    deleteProject(
+      {
+        param: {
+          projectId: initialValues.$id,
+        },
+      },
+      {
+        onSuccess: () => {
+          window.location.href = `/workspaces/${initialValues.workspaceId}`;
+        },
+      }
+    );
   };
 
   return (
@@ -260,7 +261,7 @@ export function EditProjectForm({
               className="mt-6 w-fit ml-auto"
               size="sm"
               type="button"
-              disabled={false}
+              disabled={isDeletingProject}
               onClick={handleDelete}
             >
               Delete project
