@@ -8,7 +8,7 @@ interface GetWorkspaceProps {
 }
 export const getProject = async ({
   projectId,
-}: GetWorkspaceProps): Promise<Project | null> => {
+}: GetWorkspaceProps): Promise<Project> => {
   const { databases, account } = await createSessionClient();
 
   const user = await account.get();

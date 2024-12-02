@@ -43,7 +43,7 @@ interface GetWorkspaceProps {
 }
 export const getWorkspace = async ({
   workspaceId,
-}: GetWorkspaceProps): Promise<Workspace | null> => {
+}: GetWorkspaceProps): Promise<Workspace> => {
   try {
     const { databases, account } = await createSessionClient();
 
