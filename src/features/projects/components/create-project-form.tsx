@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,7 +26,6 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateProjectModal } from "../hooks/use-create-project-modal";
 
 interface CreateProjectFormProps {
   onCancel?: () => void;
@@ -34,7 +34,7 @@ interface CreateProjectFormProps {
 export function CreateProjectForm({ onCancel }: CreateProjectFormProps) {
   const workspaceId = useWorkspaceId();
   const { mutate, isPending } = useCreateProject();
-  const { close } = useCreateProjectModal();
+  const router = useRouter();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -56,9 +56,9 @@ export function CreateProjectForm({ onCancel }: CreateProjectFormProps) {
     mutate(
       { form: finalValues },
       {
-        onSuccess: () => {
+        onSuccess: ({ data }) => {
           form.reset();
-          close();
+          router.push(`/workspaces/${workspaceId}/projects/${data.$id}`);
         },
       }
     );
