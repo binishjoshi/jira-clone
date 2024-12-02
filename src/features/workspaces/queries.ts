@@ -56,7 +56,7 @@ export const getWorkspace = async ({
     });
 
     if (!member) {
-      return null;
+      throw new Error("Unauthorized");
     }
 
     const workspace = await databases.getDocument<Workspace>(
@@ -67,7 +67,7 @@ export const getWorkspace = async ({
 
     return workspace;
   } catch {
-    return null;
+    throw new Error("Something went wrong");
   }
 };
 
@@ -85,6 +85,6 @@ export const getWorkspaceInfo = async ({ workspaceId }: GetWorkspaceProps) => {
       name: workspace.name,
     };
   } catch {
-    return null;
+    throw new Error("Something went wrong");
   }
 };
