@@ -131,18 +131,11 @@ export function EditWorkspaceForm({
       return;
     }
 
-    resetInviteCode(
-      {
-        param: {
-          workspaceId: initialValues.$id,
-        },
+    resetInviteCode({
+      param: {
+        workspaceId: initialValues.$id,
       },
-      {
-        onSuccess: () => {
-          router.refresh();
-        },
-      }
-    );
+    });
   };
 
   return (
