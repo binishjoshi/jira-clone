@@ -23,7 +23,7 @@ const app = new Hono()
         workspaceId: z.string(),
         projectId: z.string().nullish(),
         assigneeId: z.string().nullish(),
-        status: z.nativeEnum(TaskStatus).nullish(),
+        status2: z.nativeEnum(TaskStatus).nullish(),
         search: z.string().nullish(),
         dueDate: z.string().nullish(),
       })
@@ -33,7 +33,7 @@ const app = new Hono()
       const databases = c.get("databases");
       const user = c.get("user");
 
-      const { workspaceId, projectId, status, search, assigneeId, dueDate } =
+      const { workspaceId, projectId, status2, search, assigneeId, dueDate } =
         c.req.valid("query");
 
       const member = await getMember({
@@ -56,9 +56,9 @@ const app = new Hono()
         query.push(Query.equal("projectId", projectId));
       }
 
-      if (status) {
-        console.log(status);
-        query.push(Query.equal("status", status));
+      if (status2) {
+        console.log(status2);
+        query.push(Query.equal("status2", status2));
       }
 
       if (assigneeId) {
@@ -133,7 +133,7 @@ const app = new Hono()
       const databases = c.get("databases");
       const {
         name,
-        status,
+        status2,
         workspaceId,
         projectId,
         dueDate,
@@ -155,7 +155,7 @@ const app = new Hono()
         DATABASE_ID,
         TASKS_ID,
         [
-          Query.equal("status", status),
+          Query.equal("status2", status2),
           Query.equal("workspaceId", workspaceId),
           Query.orderAsc("position"),
           Query.limit(1),
@@ -173,7 +173,7 @@ const app = new Hono()
         ID.unique(),
         {
           name,
-          status,
+          status2,
           workspaceId,
           projectId,
           dueDate,
