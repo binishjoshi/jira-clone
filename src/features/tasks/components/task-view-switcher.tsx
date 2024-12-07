@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DottedSeparator from "@/components/dotted-separator";
 import { DataFilters } from "@/features/tasks/components/data-filters";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 export function TaskViewSwitcher() {
   const [{ status, assigneeId, dueDate, projectId }] = useTaskFilters();
@@ -65,7 +67,7 @@ export function TaskViewSwitcher() {
         ) : (
           <>
             <TabsContent value="table" className="mt-0">
-              {JSON.stringify(tasks)}
+              <DataTable columns={columns} data={tasks ?? []} />
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
               {JSON.stringify(tasks)}
