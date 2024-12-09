@@ -1,5 +1,8 @@
 import { ExternalLinkIcon, TrashIcon } from "lucide-react";
 
+import { useConfirm } from "@/hooks/use-confirm";
+import { useDeleteTask } from "@/features/tasks/api/use-delete-task";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,14 +17,28 @@ interface TaskActionsProps {
 }
 
 export function TaskActions({ children, id, projectId }: TaskActionsProps) {
+  const [ConfirmationDialog, confirm] = useConfirm(
+    "Delete Task",
+    "This action cannot be undone",
+    "destructive"
+  );
+  const { mutate, isPending } = useDeleteTask();
+
+  const onDelete = async () => {
+    const ok = await confirm();
+    if (!ok) return;
+
+    mutate({ param: { taskId: id } });
+  };
+
   return (
     <div className="flex justify-end">
+      <ConfirmationDialog />
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
         <DropdownMenuContent className="w-48" align="end">
           <DropdownMenuItem
             onClick={() => {}}
-            disabled={false}
             className="font-medium hover:cursor-pointer p-[10px]"
           >
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
@@ -29,7 +46,6 @@ export function TaskActions({ children, id, projectId }: TaskActionsProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {}}
-            disabled={false}
             className="font-medium hover:cursor-pointer p-[10px]"
           >
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
@@ -37,15 +53,14 @@ export function TaskActions({ children, id, projectId }: TaskActionsProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {}}
-            disabled={false}
             className="font-medium hover:cursor-pointer p-[10px]"
           >
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
             Edit Task
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => {}}
-            disabled={false}
+            onClick={onDelete}
+            disabled={isPending}
             className="text-amber-700 focus:text-amber-700 font-medium hover:cursor-pointer p-[10px]"
           >
             <TrashIcon className="size-4 mr-2 stroke-2" />
