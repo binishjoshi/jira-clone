@@ -3,6 +3,7 @@ import { ExternalLinkIcon, TrashIcon } from "lucide-react";
 
 import { useConfirm } from "@/hooks/use-confirm";
 import { useDeleteTask } from "@/features/tasks/api/use-delete-task";
+import { useEditTaskModal } from "../hooks/use-edit-task-modal";
 
 import {
   DropdownMenu,
@@ -21,6 +22,9 @@ interface TaskActionsProps {
 export function TaskActions({ children, id, projectId }: TaskActionsProps) {
   const workspaceId = useWorkspaceId();
   const router = useRouter();
+
+  const { open: openEditTask } = useEditTaskModal();
+
   const [ConfirmationDialog, confirm] = useConfirm(
     "Delete Task",
     "This action cannot be undone",
@@ -64,7 +68,7 @@ export function TaskActions({ children, id, projectId }: TaskActionsProps) {
             Open Project
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => {}}
+            onClick={() => openEditTask(id)}
             className="font-medium hover:cursor-pointer p-[10px]"
           >
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
