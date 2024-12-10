@@ -14,6 +14,7 @@ import DottedSeparator from "@/components/dotted-separator";
 import { DataFilters } from "@/features/tasks/components/data-filters";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import { DataKanban } from "./data-kanban";
 
 export function TaskViewSwitcher() {
   const [{ status, assigneeId, dueDate, projectId }] = useTaskFilters();
@@ -70,7 +71,7 @@ export function TaskViewSwitcher() {
               <DataTable columns={columns} data={tasks ?? []} />
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
-              {JSON.stringify(tasks)}
+              <DataKanban data={tasks ?? []} />
             </TabsContent>
             <TabsContent value="calendar" className="mt-0">
               Data calendar
