@@ -8,16 +8,18 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useGetTasks } from "../api/use-get-tasks";
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 import { useTaskFilters } from "../hooks/use-task-filters";
+import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DottedSeparator from "@/components/dotted-separator";
 import { DataFilters } from "@/features/tasks/components/data-filters";
 import { DataTable } from "./data-table";
-import { columns } from "./columns";
 import { DataKanban } from "./data-kanban";
+import { DataCalendar } from "./data-calendar";
+import { columns } from "./columns";
+
 import { TaskStatus } from "../types";
-import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 
 export function TaskViewSwitcher() {
   const [{ status, assigneeId, dueDate, projectId }] = useTaskFilters();
@@ -86,8 +88,8 @@ export function TaskViewSwitcher() {
             <TabsContent value="kanban" className="mt-0">
               <DataKanban onChange={onKanbanChange} data={tasks ?? []} />
             </TabsContent>
-            <TabsContent value="calendar" className="mt-0">
-              Data calendar
+            <TabsContent value="calendar" className="mt-0 h-full">
+              <DataCalendar data={tasks ?? []} />
             </TabsContent>
           </>
         )}
