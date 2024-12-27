@@ -70,21 +70,3 @@ export const getWorkspace = async ({
     throw new Error("Something went wrong");
   }
 };
-
-export const getWorkspaceInfo = async ({ workspaceId }: GetWorkspaceProps) => {
-  try {
-    const { databases } = await createSessionClient();
-
-    const workspace = await databases.getDocument<Workspace>(
-      DATABASE_ID,
-      WORKSPACES_ID,
-      workspaceId
-    );
-
-    return {
-      name: workspace.name,
-    };
-  } catch {
-    throw new Error("Something went wrong");
-  }
-};
