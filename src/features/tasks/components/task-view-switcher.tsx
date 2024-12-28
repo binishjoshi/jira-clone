@@ -5,6 +5,7 @@ import { useQueryState } from "nuqs";
 import { Loader, PlusIcon } from "lucide-react";
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 import { useGetTasks } from "../api/use-get-tasks";
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 import { useTaskFilters } from "../hooks/use-task-filters";
@@ -33,6 +34,7 @@ export function TaskViewSwitcher({ hideProjectFilter }: TaskViewSwitcherProps) {
   });
 
   const workspaceId = useWorkspaceId();
+  const paramProjectId = useProjectId();
 
   const { open } = useCreateTaskModal();
 
@@ -40,7 +42,7 @@ export function TaskViewSwitcher({ hideProjectFilter }: TaskViewSwitcherProps) {
 
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
-    projectId,
+    projectId: paramProjectId || projectId,
     assigneeId,
     status,
     dueDate,
