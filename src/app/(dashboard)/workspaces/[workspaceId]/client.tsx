@@ -48,7 +48,7 @@ export function WorkspaceIdClient() {
     isLoadingMembers;
 
   if (isLoading) {
-    <PageLoader />;
+    return <PageLoader />;
   }
 
   if (!analytics || !tasks || !projects || !members) {
