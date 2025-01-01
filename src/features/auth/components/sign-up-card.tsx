@@ -5,7 +5,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
+import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
 import { useSignUp } from "../api/use-sign-up";
 import { signUpSchema } from "../schemas";
 
@@ -129,9 +131,20 @@ export default function SignUpCard() {
           disabled={isPending}
           size="lg"
           className="w-full"
+          onClick={() => signUpWithGoogle()}
         >
           <FcGoogle className="size-5" />
-          Sign In with Google
+          Sign Up with Google
+        </Button>
+        <Button
+          variant="secondary"
+          disabled={isPending}
+          size="lg"
+          className="w-full"
+          onClick={() => signUpWithGithub()}
+        >
+          <FaGithub className="size-5" />
+          Sign Up with Github
         </Button>
       </CardContent>
       <div className="px-7">

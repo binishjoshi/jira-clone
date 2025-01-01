@@ -5,8 +5,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
-import { signUpWithGithub } from "@/lib/oauth";
+import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DottedSeparator from "@/components/dotted-separator";
@@ -21,7 +22,6 @@ import {
 } from "@/components/ui/form";
 import { signInSchema } from "@/features/auth/schemas";
 import { useSignIn } from "../api/use-sign-in";
-import { FaGithub } from "react-icons/fa";
 
 export default function SignInCard() {
   const { mutate, isPending } = useSignIn();
@@ -99,6 +99,7 @@ export default function SignInCard() {
           disabled={isPending}
           size="lg"
           className="w-full"
+          onClick={() => signUpWithGoogle()}
         >
           <FcGoogle className="size-5" />
           Sign In with Google
