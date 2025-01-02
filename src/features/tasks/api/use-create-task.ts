@@ -20,9 +20,15 @@ export const useCreateTask = () => {
 
       return await response.json();
     },
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       toast.success("Task created");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["project-analytics", data.projectId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["workspace-analytics", data.workspaceId],
+      });
     },
     onError: () => {
       toast.error("Failed to create task");
