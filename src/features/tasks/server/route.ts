@@ -213,13 +213,7 @@ const app = new Hono()
 
     await databases.deleteDocument(DATABASE_ID, TASKS_ID, taskId);
 
-    return c.json({
-      data: {
-        $id: task.$id,
-        projectId: task.projectId,
-        workspaceId: task.workspaceId,
-      },
-    });
+    return c.json({ data: { $id: task.$id } });
   })
   .patch(
     "/:taskId",
