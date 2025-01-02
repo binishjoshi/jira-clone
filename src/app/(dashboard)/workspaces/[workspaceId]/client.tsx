@@ -93,13 +93,15 @@ export const TaskList = ({ data, total }: TaskListProps) => {
               <Link href={`/workspaces/${workspaceId}/tasks/${task.$id}`}>
                 <Card className="shadow-none rounded-lg hover:opacity-75 transition">
                   <CardContent className="p-4">
-                    <p className="text-lg font-medium truncate">{task.name}</p>
-                    <div className="flex items-center gap-x-2">
+                    <p className="text-base font-medium truncate">
+                      {task.name}
+                    </p>
+                    <div className="flex items-center gap-x-2 text-xs">
                       <p>{task.project?.name}</p>
                       <div className="size-1 rounded-full bg-neutral-300" />
                       <div className="text-sm text-muted-foreground flex items-center">
                         <CalendarIcon className="size-3 mr-1" />
-                        <span className="truncate">
+                        <span className="truncate text-xs">
                           {formatDistanceToNow(new Date(task.dueDate))}
                         </span>
                       </div>
@@ -149,11 +151,11 @@ export const ProjectList = ({ data, total }: ProjectListProps) => {
                   <CardContent className="p-4 flex items-center gap-x-2.5">
                     <ProjectAvatar
                       className="size-12"
-                      fallbackClassName="text-lg"
+                      fallbackClassName="text-base"
                       name={project.name}
                       image={project.imageUrl}
                     />
-                    <p className="text-lg font-medium truncate">
+                    <p className="text-base font-medium truncate">
                       {project.name}
                     </p>
                   </CardContent>
@@ -200,7 +202,7 @@ export const MemberList = ({ data, total }: MemberListProps) => {
                     fallbackClassName="text-lg"
                     name={member.name}
                   />
-                  <p className="text-lg font-medium line-clamp-1">
+                  <p className="text-base font-medium line-clamp-1">
                     {member.name}
                   </p>
                   <p className="text-sm text-muted-foreground line-clamp-1">
