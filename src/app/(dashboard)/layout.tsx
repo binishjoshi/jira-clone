@@ -1,5 +1,11 @@
+import { redirect } from "next/navigation";
+
 import { Navbar } from "@/components/navbar";
 import { SideBar } from "@/components/sidebar";
+
+import { getCurrent } from "@/features/auth/queries";
+import { getWorkspaces } from "@/features/workspaces/queries";
+
 import { CreateProjectModal } from "@/features/projects/components/create-project-modal";
 import { CreateTaskModal } from "@/features/tasks/components/create-task-modal";
 import { EditTaskModal } from "@/features/tasks/components/edit-task-modal";
@@ -9,7 +15,19 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({
+  children,
+}: DashboardLayoutProps) {
+  const user = await getCurrent();
+  if (!user) {
+    redirect("/sign-in");
+  }
+
+  const workspaces = await getWorkspaces();
+  if (workspaces.total === 0) {
+    redirect("/workspaces/create");
+  }
+
   return (
     <div className="min-h-screen">
       <CreateWorkspaceModal />
