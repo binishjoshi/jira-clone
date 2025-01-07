@@ -31,6 +31,7 @@ import {
 import { MemberAvatar } from "@/features/members/components/member-avatar";
 import { TaskStatus } from "../types";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+import { DatePicker } from "@/components/date-picker";
 
 interface CreateTaskFormProps {
   onCancel?: () => void;
@@ -97,7 +98,7 @@ export function CreateTaskForm({
                   </FormItem>
                 )}
               />
-              {/* <FormField
+              <FormField
                 control={form.control}
                 name="dueDate"
                 render={({ field }) => (
@@ -109,7 +110,7 @@ export function CreateTaskForm({
                     <FormMessage />
                   </FormItem>
                 )}
-              /> */}
+              />
               <FormField
                 control={form.control}
                 name="assigneeId"
